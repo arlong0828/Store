@@ -1,0 +1,17 @@
+{% extends "base_login_success.html" %}
+{% load static %}
+{% block content %}
+<form class="text-left clearfix" action="/revise/"  method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p><input type = 'text' name = 'name' value="{{ memberlist_get.cName }}"></p>
+    <p><input type = 'text' name = 'sex' value="{{ memberlist_get.cSex }}"></p>
+    <p><input type = 'text' name = 'email' value="{{ memberlist_get.cEmail }}"></p>
+    <p><input type = 'text' name = 'passward' value="{{ memberlist_get.cPassward }}"></p>
+    <p><img src="/{{ memberlist_get.cPhoto1 }}" alt=""><input type="file" name="photo1"  placeholder="Photo"></p>
+    <p><img src="/{{ memberlist_get.cPhoto2 }}" alt=""><input type="file" name="photo2"  placeholder="Photo"></p>
+    <p><img src="/{{ memberlist_get.cPhoto3 }}" alt=""><input type="file" name="photo3"  placeholder="Photo"></p>
+    <div class="text-center">
+      <button type="submit" class="btn btn-main text-center" name = "revise">修改</button>
+    </div>
+  </form>
+{% endblock %}

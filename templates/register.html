@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="signin-page account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+          <a class="logo" href="/">
+            <img src="/static/images/logo.png" alt="">
+          </a>
+          <h2 class="text-center">創建帳號</h2>
+          <form class="text-left clearfix" action="/register/"  method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <h2>{{ t }}</h2>
+            </div>
+            <div class="form-group">
+              <input type="Name" class="form-control" name="cName" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <input type="Sex" class="form-control" name="cSex" placeholder="Sex">
+            </div>
+            <div class="form-group">
+              <input type="Email" class="form-control" name="cEmail" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <input type="Passward" class="form-control" name="cPassward" placeholder="Password">
+            </div>
+            <div class="form-group">
+             <input type="file" name="cPhoto1"  placeholder="Photo">
+            </div>
+            <div class="form-group">
+              <input type="file" name="cPhoto2"  placeholder="Photo">
+            </div>
+            <div class="form-group">
+              <input type="file" name="cPhoto3"  placeholder="Photo">
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-main text-center">註冊</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

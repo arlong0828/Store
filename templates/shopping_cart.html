@@ -1,0 +1,22 @@
+{% extends "base_login_success.html" %}
+{% load static %}
+{% block content %}
+{% csrf_token %}
+{% for n in nlist %}
+<div class="form-group">
+  <p>鞋名：{{ n }} </p>
+</div>
+{% endfor %}
+{% for p in plist %}
+<div class="form-group">
+  <p>價錢：{{ p }}</p>
+</div>
+{% endfor %}
+<div class="form-group">
+    <p>總價：{{ sum }}</p>
+</div>
+<div class="text-center">
+    <p><a href="/checkout/">結帳</a></p>
+</div>
+
+{% endblock %}
