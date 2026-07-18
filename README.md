@@ -1,5 +1,7 @@
 # Stride AI 無人商店
 
+[![CI](https://github.com/arlong0828/Store/actions/workflows/ci.yml/badge.svg)](https://github.com/arlong0828/Store/actions/workflows/ci.yml)
+
 一套以 Django 建置的智慧零售示範系統，結合 OpenCV / TensorFlow 商品辨識與 Azure Face 會員驗證，提供刷臉登入、商品辨識、購物車及結帳流程。
 
 ## 主要功能
@@ -32,6 +34,11 @@ static/
 ├── images/hero/          無人商店與 AI 辨識情境圖
 ├── media/                舊版示範資料（新上傳檔案改存 media/）
 └── model/                商品辨識模型
+requirements/
+├── base.txt              Django 網站核心依賴
+├── ai.txt                相機與 AI 辨識依賴
+└── ci.txt                GitHub Actions 測試依賴
+.github/workflows/ci.yml  自動化檢查與測試
 ```
 
 ## 本機啟動
@@ -42,6 +49,18 @@ static/
 4. 執行 `python manage.py runserver`，前往 `http://127.0.0.1:8000/`。
 
 首頁與一般會員頁可在未安裝 TensorFlow / Azure SDK 時使用；只有實際執行辨識或註冊訓練時才會載入相關套件。
+
+## CI
+
+推送 commit 或建立 Pull Request 時，GitHub Actions 會使用 Python 3.9 與 3.11 自動執行：
+
+- Django 系統設定檢查
+- Migration 完整性與套用測試
+- 必要靜態資源檢查
+- 所有 Django 模板編譯
+- 自動化測試
+
+也可以在 GitHub 的 **Actions → CI → Run workflow** 手動執行。
 
 ## 環境變數
 

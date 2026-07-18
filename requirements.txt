@@ -1,8 +1,2 @@
-Django>=4.2,<5.0
-Pillow>=10.0
-requests>=2.31
-numpy>=1.24
-opencv-python>=4.8
-tensorflow>=2.13
-azure-cognitiveservices-vision-face>=0.6
-msrest>=0.7
+-r requirements/base.txt
+-r requirements/ai.txt
