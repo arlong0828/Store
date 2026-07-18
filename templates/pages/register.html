@@ -11,7 +11,7 @@
     </div>
     <form class="form-card reveal" action="{% url 'register' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      {% if t %}<div class="alert" role="alert">{{ t }}</div>{% endif %}
+      {% if error %}<div class="alert" role="alert">{{ error }}</div>{% endif %}
       <div class="form-grid">
         <label><span>姓名</span><input type="text" name="cName" maxlength="20" autocomplete="name" placeholder="請輸入姓名" required></label>
         <label><span>性別</span><select name="cSex" required><option value="" selected disabled>請選擇</option><option value="男">男</option><option value="女">女</option><option value="其他">其他</option></select></label>

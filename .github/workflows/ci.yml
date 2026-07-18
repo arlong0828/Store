@@ -55,7 +55,14 @@ jobs:
         run: python manage.py migrate --noinput
 
       - name: Verify required static assets
-        run: python manage.py findstatic css/app.css js/app.js images/brand/favicon.png --verbosity 0
+        run: >-
+          python manage.py findstatic
+          css/app.css
+          js/app.js
+          images/brand/favicon.png
+          model/face_detection_yunet_2023mar.onnx
+          model/face_recognition_sface_2021dec.onnx
+          --verbosity 0
 
       - name: Run test suite
         run: python manage.py test --verbosity 2

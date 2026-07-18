@@ -12,6 +12,7 @@
     </div>
     <form class="camera-card reveal reveal-delay" action="{% url 'login' %}" method="post">
       {% csrf_token %}
+      {% if error %}<div class="alert" role="alert">{{ error }}</div>{% endif %}
       <div class="camera-head"><div><span class="live-dot"></span> LIVE CAMERA</div><small>身分驗證</small></div>
       <div class="camera-view">
         <img src="{% url 'video-face' %}" alt="即時臉部辨識畫面">

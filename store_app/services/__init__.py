@@ -1,1 +1,1 @@
-"""External AI, camera, and image-hosting integrations."""
+"""Local camera, face recognition, and product-recognition services."""

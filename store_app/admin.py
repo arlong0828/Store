@@ -19,7 +19,11 @@ class Admin_commodity_show_field(admin.ModelAdmin):
 admin.site.register(commodity,Admin_commodity_show_field)
 
 class Admin_faceID_show_field(admin.ModelAdmin):
-    list_display = ('id','faceID_name','faceID_number')
+    list_display = ('id','faceID_name','has_local_embeddings')
     search_fields = ('faceID_name',)
     ordering = ('id',)
+
+    @admin.display(boolean=True, description='本機特徵')
+    def has_local_embeddings(self, obj):
+        return bool(obj.faceID_embeddings)
 admin.site.register(faceID,Admin_faceID_show_field)

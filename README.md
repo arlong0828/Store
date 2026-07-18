@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/arlong0828/Store/actions/workflows/ci.yml/badge.svg)](https://github.com/arlong0828/Store/actions/workflows/ci.yml)
 
-一套以 Django 建置的智慧零售示範系統，結合 OpenCV / TensorFlow 商品辨識與 Azure Face 會員驗證，提供刷臉登入、商品辨識、購物車及結帳流程。
+一套以 Django 建置的智慧零售示範系統，結合 OpenCV YuNet / SFace 本機人臉辨識與 TensorFlow 商品辨識，提供刷臉登入、商品辨識、購物車及結帳流程。
 
 ## 主要功能
 
@@ -11,7 +11,7 @@
 - CNN 鞋款辨識與自動加入購物車
 - Session-based 個人購物清單
 - 會員資料及辨識照片管理
-- Azure Face 與 Imgur 外部服務整合
+- YuNet + SFace 完全本機人臉辨識，不需雲端 API
 
 ## 專案結構
 
@@ -19,7 +19,7 @@
 store/                    Django 專案設定與根路由
 store_app/
 ├── migrations/           資料庫版本
-├── services/             相機、Azure、上傳及訓練整合
+├── services/             相機、本機人臉與商品辨識服務
 ├── models.py             會員、商品與 Face ID 資料模型
 ├── urls.py               商店功能路由
 └── views.py              畫面流程與 Session 狀態
@@ -33,7 +33,7 @@ static/
 ├── images/brand/         品牌標誌與 favicon
 ├── images/hero/          無人商店與 AI 辨識情境圖
 ├── media/                舊版示範資料（新上傳檔案改存 media/）
-└── model/                商品辨識模型
+└── model/                商品與人臉辨識模型
 requirements/
 ├── base.txt              Django 網站核心依賴
 ├── ai.txt                相機與 AI 辨識依賴
@@ -44,11 +44,19 @@ requirements/
 ## 本機啟動
 
 1. 建立 Python 虛擬環境並安裝依賴：`pip install -r requirements.txt`
-2. 複製 `.env.example` 的設定到執行環境，填入 Azure Face 與 Imgur 憑證。
+2. 複製 `.env.example` 的設定到執行環境；人臉辨識不需要任何 API Key。
 3. 執行 `python manage.py migrate` 建立資料庫。
 4. 執行 `python manage.py runserver`，前往 `http://127.0.0.1:8000/`。
 
-首頁與一般會員頁可在未安裝 TensorFlow / Azure SDK 時使用；只有實際執行辨識或註冊訓練時才會載入相關套件。
+人臉辨識會使用專案內的 YuNet 與 SFace ONNX 模型，照片和特徵向量都留在本機。TensorFlow 只在執行鞋款辨識時載入。
+
+若資料庫裡已有舊會員，套用 migration 後可從原有三張照片重建本機特徵：
+
+```bash
+python manage.py rebuild_face_profiles
+```
+
+只處理一位會員可使用 `python manage.py rebuild_face_profiles --name "會員姓名"`。
 
 ## CI
 
@@ -68,6 +76,4 @@ requirements/
 |---|---|
 | `DJANGO_SECRET_KEY` | Django 簽章金鑰 |
 | `DJANGO_ALLOWED_HOSTS` | 允許的主機名稱，以逗號分隔 |
-| `AZURE_FACE_KEY` | Azure Face API 金鑰 |
-| `AZURE_FACE_ENDPOINT` | Azure Face API 端點 |
-| `IMGUR_CLIENT_ID` | 暫存辨識影像所需的 Imgur Client ID |
+| `FACE_MATCH_THRESHOLD` | SFace cosine 登入門檻，預設 `0.363` |

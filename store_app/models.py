@@ -24,7 +24,7 @@ class commodity(models.Model):
 
 class faceID(models.Model):
     faceID_name = models.CharField(max_length=20 , null=False, default="")
-    faceID_number = models.CharField(max_length=100 , null=False, default="")
+    faceID_embeddings = models.JSONField(default=list, blank=True)
     
     def __str__(self):
         return self.faceID_name

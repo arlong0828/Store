@@ -61,7 +61,6 @@ class RegisterView(View):
             raise Http404("只接受 JPG 或 PNG 圖片。")
 
         name = request.POST.get("cName", "").strip()
-        face_image = faceID.objects.create(faceID_name=name)
         account = member.objects.create(
             cName=name,
             cSex=request.POST.get("cSex", ""),
@@ -73,17 +72,17 @@ class RegisterView(View):
         )
 
         try:
-            from .services.face_training import train_member_face
+            from .services.local_face import FaceRecognitionError, enroll_member
 
-            train_member_face(account)
-        except Exception:
+            enroll_member(account)
+        except (FaceRecognitionError, OSError, ValueError) as error:
             account.delete()
-            face_image.delete()
+            faceID.objects.filter(faceID_name=name).delete()
             return render(
                 request,
                 "pages/register.html",
-                {"t": "辨識服務目前無法完成註冊，請稍後再試。"},
-                status=503,
+                {"error": f"無法建立本機人臉特徵：{error}"},
+                status=422,
             )
 
         request.session["member_name"] = account.cName
@@ -96,34 +95,22 @@ class LoginView(View):
 
     def post(self, request):
         try:
-            from azure.cognitiveservices.vision.face import FaceClient
-            from msrest.authentication import CognitiveServicesCredentials
+            from .services.local_face import FaceRecognitionError, recognize_member
 
-            from .services.azure_config import azure_face_credentials
-            from .services.image_upload import upload_image
-
-            image_url = upload_image(BASE_DIR / "static/camera/tem.jpg")
-            key, endpoint = azure_face_credentials()
-            client = FaceClient(endpoint, CognitiveServicesCredentials(key))
-            detected = client.face.detect_with_url(url=image_url)
-            face_ids = [face.face_id for face in detected]
-            results = client.face.identify(face_ids, "school_face_identification")
-
-            matched_name = ""
-            people = {str(person.faceID_number): person.faceID_name for person in faceID.objects.all()}
-            for result in results:
-                if result.candidates:
-                    matched_name = people.get(str(result.candidates[0].person_id), "")
-                    if matched_name:
-                        break
-        except Exception:
-            matched_name = ""
+            matched_name, _score = recognize_member(BASE_DIR / "static/camera/tem.jpg")
+        except (FaceRecognitionError, OSError, ValueError) as error:
+            return render(
+                request,
+                "pages/login.html",
+                {"error": f"本機辨識失敗：{error}"},
+                status=422,
+            )
 
         if not matched_name:
             return render(
                 request,
-                "pages/register.html",
-                {"t": "登入失敗，尚未找到相符會員，請重新嘗試或建立帳號。"},
+                "pages/login.html",
+                {"error": "沒有找到相符會員，請調整角度後重試，或先建立帳號。"},
                 status=401,
             )
 
@@ -255,6 +242,8 @@ class ProfileEditView(View):
             return blocked
 
         account = member.objects.get(cName=member_name(request))
+        old_name = account.cName
+        photos_changed = False
         account.cName = request.POST.get("name", account.cName).strip()
         account.cSex = request.POST.get("sex", account.cSex)
         account.cEmail = request.POST.get("email", account.cEmail).strip()
@@ -265,6 +254,25 @@ class ProfileEditView(View):
                 if Path(photo.name).suffix.lower() not in self.allowed_extensions:
                     raise Http404("只接受 JPG 或 PNG 圖片。")
                 setattr(account, f"cPhoto{number}", photo)
+                photos_changed = True
         account.save()
+
+        profile = faceID.objects.filter(faceID_name=old_name).first()
+        if profile and old_name != account.cName:
+            profile.faceID_name = account.cName
+            profile.save(update_fields=["faceID_name"])
+
+        if photos_changed:
+            try:
+                from .services.local_face import enroll_member
+
+                enroll_member(account)
+            except Exception as error:
+                return render(
+                    request,
+                    "pages/profile_edit.html",
+                    {"t": account.cName, "memberlist_get": account, "error": f"照片已儲存，但人臉特徵更新失敗：{error}"},
+                    status=422,
+                )
         request.session["member_name"] = account.cName
         return redirect("profile")
