@@ -1,0 +1,27 @@
+{% extends "layouts/base.html" %}
+{% block title %}臉部登入｜Stride AI{% endblock %}
+{% block body_class %}app-page{% endblock %}
+{% block content %}
+<section class="auth-section">
+  <div class="shell auth-grid">
+    <div class="auth-intro reveal">
+      <p class="eyebrow"><span></span> FACE ID LOGIN</p>
+      <h1>看向鏡頭，<br><em>兩秒完成登入。</em></h1>
+      <p>請保持臉部位於取景框中央，並確認環境光線充足。影像只用於即時會員驗證。</p>
+      <a class="back-link" href="{% url 'home' %}">← 返回首頁</a>
+    </div>
+    <form class="camera-card reveal reveal-delay" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <div class="camera-head"><div><span class="live-dot"></span> LIVE CAMERA</div><small>身分驗證</small></div>
+      <div class="camera-view">
+        <img src="{% url 'video-face' %}" alt="即時臉部辨識畫面">
+        <div class="face-guide" aria-hidden="true"></div>
+        <p>請將臉部對準框線</p>
+      </div>
+      <div class="privacy-note"><span>⌾</span><p><strong>隱私安全</strong><br>影像僅在辨識過程中使用，不會另行儲存。</p></div>
+      <button class="button button-primary button-full" type="submit">辨識並登入 <span>→</span></button>
+      <p class="form-switch">第一次使用？<a href="{% url 'register' %}">建立會員帳號</a></p>
+    </form>
+  </div>
+</section>
+{% endblock %}

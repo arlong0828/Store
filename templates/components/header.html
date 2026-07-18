@@ -1,0 +1,39 @@
+<header class="site-header" data-header>
+  <div class="shell header-inner">
+    <a class="brand" href="{% if t %}{% url 'home-authenticated' %}{% else %}{% url 'home' %}{% endif %}" aria-label="Stride AI 首頁">
+      <span class="brand-mark" aria-hidden="true">S</span>
+      <span>
+        <strong>STRIDE</strong>
+        <small>AI STORE</small>
+      </span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" data-menu-toggle>
+      <span></span><span></span><span></span>
+      <span class="sr-only">開啟選單</span>
+    </button>
+
+    <nav class="main-nav" id="main-navigation" aria-label="主要導覽" data-menu>
+      {% if t %}
+        <a href="{% url 'home-authenticated' %}">探索商品</a>
+        <a href="{% url 'shopping' %}">開始辨識</a>
+        <a href="{% url 'shopping-cart' %}">購物車</a>
+        <a href="{% url 'profile' %}">我的帳戶</a>
+        <div class="member-actions">
+          <span class="member-chip"><span class="status-dot"></span>{{ t }}</span>
+          <form action="{% url 'home-authenticated' %}" method="post">
+            {% csrf_token %}
+            <button class="text-button" type="submit" name="logout">登出</button>
+          </form>
+        </div>
+      {% else %}
+        <a href="{% url 'home' %}#products">本期選品</a>
+        <a href="{% url 'home' %}#how-it-works">購物流程</a>
+        <div class="guest-actions">
+          <a class="nav-login" href="{% url 'login' %}">會員登入</a>
+          <a class="button button-sm button-dark" href="{% url 'register' %}">立即註冊</a>
+        </div>
+      {% endif %}
+    </nav>
+  </div>
+</header>

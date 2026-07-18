@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+{% block title %}我的帳戶｜Stride AI{% endblock %}
+{% block body_class %}app-page{% endblock %}
+{% block content %}
+<section class="workspace-section">
+  <div class="shell profile-shell">
+    <div class="profile-heading"><div><p class="eyebrow"><span></span> MEMBER PROFILE</p><h1>我的帳戶</h1><p>管理基本資料與臉部辨識照片。</p></div><a class="button button-dark" href="{% url 'profile-edit' %}">編輯資料 <span>↗</span></a></div>
+    <div class="profile-grid">
+      <aside class="profile-card"><div class="profile-avatar">{{ memberlist_get.cName|first }}</div><h2>{{ memberlist_get.cName }}</h2><p>{{ memberlist_get.cEmail }}</p><span class="verified-chip"><i>✓</i> 臉部辨識已啟用</span></aside>
+      <div class="details-card">
+        <div class="panel-title"><div>基本資料</div><span>MEMBER DATA</span></div>
+        <dl class="details-list"><div><dt>姓名</dt><dd>{{ memberlist_get.cName }}</dd></div><div><dt>性別</dt><dd>{{ memberlist_get.cSex }}</dd></div><div><dt>電子信箱</dt><dd>{{ memberlist_get.cEmail }}</dd></div><div><dt>密碼</dt><dd>••••••••</dd></div></dl>
+        <div class="face-photos"><div class="panel-title"><div>辨識照片</div><span>3 PROFILES</span></div><div class="face-photo-grid"><figure><img src="{{ memberlist_get.cPhoto1.url }}" alt="正面辨識照片"><figcaption>照片 01</figcaption></figure><figure><img src="{{ memberlist_get.cPhoto2.url }}" alt="側面辨識照片"><figcaption>照片 02</figcaption></figure><figure><img src="{{ memberlist_get.cPhoto3.url }}" alt="側面辨識照片"><figcaption>照片 03</figcaption></figure></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

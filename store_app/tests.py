@@ -1,10 +1,19 @@
-# from django.test import TestCase
-# from azure
-# Create your tests here.
-from azures import key_point
-from azure.cognitiveservices.vision.face import FaceClient
-from msrest.authentication import CognitiveServicesCredentials
-Key , Point  = key_point()
-PERSON_GROUP_ID = 'school_face_identification'
-face_client = FaceClient(Point , CognitiveServicesCredentials(Key))
-face_client.person_group.create(PERSON_GROUP_ID , name= "name")
+from django.test import TestCase
+from django.urls import reverse
+
+
+class PublicPageTests(TestCase):
+    def test_home_page_renders(self):
+        response = self.client.get(reverse("home"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "走進店裡")
+        self.assertContains(response, "Dunk Low")
+
+    def test_login_page_renders(self):
+        response = self.client.get(reverse("login"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "兩秒完成登入")
+
+    def test_member_pages_require_login(self):
+        response = self.client.get(reverse("shopping"))
+        self.assertRedirects(response, reverse("login"))

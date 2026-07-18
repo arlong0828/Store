@@ -20,10 +20,6 @@ tf_env/
 .env
 *.env
 
-# Django migrations
-**/migrations/
-!*/migrations/__init__.py
-
 # 系統檔案
 .DS_Store
 Thumbs.db

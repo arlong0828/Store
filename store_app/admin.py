@@ -5,7 +5,7 @@ from store_app.models import member,commodity,faceID
 # admin.site.register(member)
 
 class Admin_member_show_field(admin.ModelAdmin):
-    list_display = ('id', 'cName', 'cSex', 'cEmail', 'cPassward', 'cPhoto1' , 'cPhoto2' , 'cPhoto3')
+    list_display = ('id', 'cName', 'cSex', 'cEmail')
     search_fields = ('cName',)
     ordering = ('id',)
 

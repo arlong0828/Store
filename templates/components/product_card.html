@@ -1,0 +1,14 @@
+<article class="product-card">
+  <div class="product-image-wrap">
+    <span class="product-badge">AI 精選</span>
+    <img class="product-image" src="{{ commodity.commodity_image.url }}" alt="{{ commodity.commodity_Name }}" loading="lazy">
+    {% if t %}<a class="product-action" href="{% url 'shopping' %}" aria-label="辨識並選購 {{ commodity.commodity_Name }}">＋</a>{% endif %}
+  </div>
+  <div class="product-info">
+    <div>
+      <p class="product-type">SNEAKERS · 智慧辨識商品</p>
+      <h3>{{ commodity.commodity_Name }}</h3>
+    </div>
+    <p class="product-price">NT$ {{ commodity.commodity_price }}</p>
+  </div>
+</article>

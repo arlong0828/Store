@@ -1,0 +1,70 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %}Stride AI｜走進店裡，輕鬆帶走{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="shell hero-grid">
+    <div class="hero-copy reveal">
+      <p class="eyebrow"><span></span> NEXT-GEN RETAIL EXPERIENCE</p>
+      <h1>走進店裡，<br><em>輕鬆帶走。</em></h1>
+      <p class="hero-lead">不用排隊、不用掃碼。透過 AI 商品辨識與人臉驗證，讓每一步都自然得像散步。</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="{% url 'login' %}">開始智慧購物 <span>→</span></a>
+        <a class="link-arrow" href="#how-it-works">看看怎麼運作 <span>↓</span></a>
+      </div>
+      <div class="trust-row">
+        <span><b>95%+</b> 商品辨識率</span>
+        <span><b>3 STEP</b> 完成購物</span>
+        <span><b>FACE ID</b> 安全驗證</span>
+      </div>
+    </div>
+    <div class="hero-visual reveal reveal-delay">
+      <div class="hero-image" role="img" aria-label="潮流運動鞋陳列"></div>
+      <div class="scan-frame" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <div class="floating-card recognition-card">
+        <span class="recognition-icon">✓</span>
+        <div><small>AI RECOGNIZED</small><strong>商品辨識完成</strong></div>
+      </div>
+      <div class="floating-card speed-card"><strong>2.4s</strong><small>平均辨識時間</small></div>
+    </div>
+  </div>
+  <div class="marquee" aria-hidden="true"><div>FACE RECOGNITION <i>✦</i> SMART CHECKOUT <i>✦</i> WALK IN. WALK OUT. <i>✦</i> FACE RECOGNITION <i>✦</i> SMART CHECKOUT</div></div>
+</section>
+
+<section class="section-block" id="products">
+  <div class="shell">
+    <div class="section-heading reveal">
+      <div><p class="eyebrow"><span></span> CURATED FOR YOU</p><h2>本期精選鞋款</h2></div>
+      <p>從經典輪廓到日常機能，每一雙都已加入智慧辨識資料庫。</p>
+    </div>
+    <div class="product-grid">
+      {% for commodity in commoditylist %}
+        {% include "components/product_card.html" %}
+      {% empty %}
+        <div class="empty-state wide"><span>01—10</span><h3>選品正在上架</h3><p>商品資料完成設定後，就會顯示在這裡。</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="process-section" id="how-it-works">
+  <div class="shell">
+    <div class="section-heading light reveal">
+      <div><p class="eyebrow"><span></span> HOW IT WORKS</p><h2>三步，完成購物</h2></div>
+      <p>科技很複雜，使用不必複雜。把注意力留給你真正喜歡的商品。</p>
+    </div>
+    <div class="steps-grid">
+      <article><span class="step-number">01</span><div class="step-icon">◎</div><h3>刷臉登入</h3><p>站到鏡頭前，系統會安全辨識會員身分。</p></article>
+      <article><span class="step-number">02</span><div class="step-icon">⌑</div><h3>展示商品</h3><p>將商品放入辨識區，AI 自動確認品項與價格。</p></article>
+      <article><span class="step-number">03</span><div class="step-icon">✓</div><h3>確認帶走</h3><p>檢查購物清單、完成付款，這樣就好了。</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="shell cta-card reveal">
+    <div><p class="eyebrow"><span></span> READY WHEN YOU ARE</p><h2>準備好，換一種方式逛店？</h2></div>
+    <a class="button button-dark" href="{% url 'register' %}">建立免費帳號 <span>→</span></a>
+  </div>
+</section>
+{% endblock %}
