@@ -58,6 +58,68 @@ python manage.py rebuild_face_profiles
 
 只處理一位會員可使用 `python manage.py rebuild_face_profiles --name "會員姓名"`。
 
+## Cloudflare 正式部署
+
+正式環境使用 `Cloudflare Tunnel → Nginx → Gunicorn → Django`，不要使用
+`manage.py runserver`。以下範例假設專案位於 `/var/www/Store`，正式網域為
+`store.example.com`。
+
+1. 建立 `.env`，將 `.env.example` 的 `store.example.com` 換成正式網域，並產生金鑰：
+
+   ```bash
+   cp .env.example .env
+   .venv/bin/python -c 'import secrets; print(secrets.token_urlsafe(64))'
+   ```
+
+   將輸出的值填入 `.env` 的 `DJANGO_SECRET_KEY`。不要提交 `.env`。
+
+2. 安裝依賴、套用 migration 並收集靜態檔案：
+
+   ```bash
+   .venv/bin/pip install -r requirements.txt
+   set -a; source .env; set +a
+   .venv/bin/python manage.py migrate
+   .venv/bin/python manage.py collectstatic --noinput
+   .venv/bin/python manage.py check --deploy
+   ```
+
+3. 安裝 Nginx，啟用儲存庫提供的設定：
+
+   ```bash
+   apt install -y nginx
+   ln -s /var/www/Store/deploy/nginx-store.conf /etc/nginx/sites-enabled/store
+   nginx -t
+   systemctl restart nginx
+   ```
+
+4. 安裝並啟用 Gunicorn systemd service：
+
+   ```bash
+   cp deploy/store.service /etc/systemd/system/store.service
+   chown -R www-data:www-data /var/www/Store/media /var/www/Store/db.sqlite3
+   systemctl daemon-reload
+   systemctl enable --now store
+   systemctl status store
+   ```
+
+5. 在 Cloudflare Dashboard 的 **Networking → Tunnels** 建立 Named Tunnel，依畫面指令
+   安裝 connector。新增 Published application，Hostname 填正式網域，Service URL 填
+   `http://127.0.0.1:8080`。Tunnel 必須顯示 Healthy。
+
+更新程式後執行：
+
+```bash
+cd /var/www/Store
+.venv/bin/pip install -r requirements.txt
+set -a; source .env; set +a
+.venv/bin/python manage.py migrate
+.venv/bin/python manage.py collectstatic --noinput
+systemctl restart store
+```
+
+查看服務紀錄：`journalctl -u store -f`。若相機裝置只允許特定群組存取，需將
+`www-data` 加入該裝置所屬群組後重啟服務。
+
 ## CI
 
 推送 commit 或建立 Pull Request 時，GitHub Actions 會使用 Python 3.9 與 3.11 自動執行：

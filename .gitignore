@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.log
+staticfiles/
 
 # 虛擬環境
 .venv/
