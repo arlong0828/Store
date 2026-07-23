@@ -8,8 +8,8 @@ User=www-data
 Group=www-data
 WorkingDirectory=/var/www/Store
 EnvironmentFile=/var/www/Store/.env
-ExecStart=/var/www/Store/.venv/bin/gunicorn store.wsgi:application --bind 127.0.0.1:8000 --workers 1 --timeout 120 --access-logfile - --error-logfile -
-Restart=on-failure
+ExecStart=/var/www/Store/.venv/bin/gunicorn store.wsgi:application --bind 0.0.0.0:8000 --workers 1 --timeout 120 --access-logfile - --error-logfile -
+Restart=always
 RestartSec=5
 PrivateTmp=true
 

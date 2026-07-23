@@ -5,6 +5,7 @@ the catalogue and account pages can still run in a lightweight web environment.
 """
 
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 
 from django.http import Http404, StreamingHttpResponse
 from django.shortcuts import redirect, render
@@ -90,14 +91,38 @@ class RegisterView(View):
 
 
 class LoginView(View):
+    max_image_size = 5 * 1024 * 1024
+    allowed_content_types = {"image/jpeg", "image/png", "image/webp"}
+
     def get(self, request):
         return render(request, "pages/login.html")
 
     def post(self, request):
+        image = request.FILES.get("face_image")
+        if image is None:
+            return render(
+                request,
+                "pages/login.html",
+                {"error": "尚未取得鏡頭影像，請允許相機權限後再試一次。"},
+                status=400,
+            )
+        if image.size > self.max_image_size or image.content_type not in self.allowed_content_types:
+            return render(
+                request,
+                "pages/login.html",
+                {"error": "鏡頭影像格式不正確或超過 5 MB。"},
+                status=400,
+            )
+
         try:
             from .services.local_face import FaceRecognitionError, recognize_member
 
-            matched_name, _score = recognize_member(BASE_DIR / "static/camera/tem.jpg")
+            suffix = Path(image.name).suffix or ".jpg"
+            with NamedTemporaryFile(suffix=suffix) as captured:
+                for chunk in image.chunks():
+                    captured.write(chunk)
+                captured.flush()
+                matched_name, _score = recognize_member(captured.name)
         except (FaceRecognitionError, OSError, ValueError) as error:
             return render(
                 request,
