@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="description" content="鄭樺駿 Gary Chen 的履歷網站：軟體工程、AI、全端開發、深度學習與演算法最佳化。" />
+  <meta property="og:title" content="鄭樺駿 Gary Chen — 軟體工程師履歷" />
+  <meta property="og:description" content="資訊管理碩士，具備 Python、FastAPI、Vue、TypeScript、Java、資料庫、深度學習與物流演算法研究經驗。" />
+  <meta property="og:type" content="website" />
+  <title>鄭樺駿 Gary Chen — 軟體工程師履歷</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --paper: #ffffff;
+      --soft: #f6f7f9;
+      --line: #e5e7eb;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --faint: #6b7280;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --green: #047857;
+      --green-soft: #ecfdf5;
+      --amber: #b45309;
+      --amber-soft: #fffbeb;
+      --radius: 18px;
+      --shadow: 0 18px 45px rgba(17, 24, 39, .08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.03em; }
+    .mark { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--blue-soft); color: var(--blue); border: 1px solid #bfdbfe; font-weight: 800; }
+    nav { display: flex; align-items: center; gap: 18px; color: var(--faint); font-size: 14px; font-weight: 600; }
+    nav a:hover { color: var(--blue); }
+    .hero { padding: 72px 0 48px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, #fff 0%, #f9fafb 100%); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--blue); background: var(--blue-soft); border: 1px solid #dbeafe; padding: 7px 11px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+    h1 { margin: 18px 0 14px; font-size: clamp(38px, 6vw, 68px); line-height: 1.06; letter-spacing: -.065em; max-width: 900px; }
+    .lead { max-width: 780px; color: var(--muted); font-size: 19px; margin: 0; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 15px; border-radius: 11px; border: 1px solid var(--line); background: #fff; font-weight: 700; transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(17,24,39,.08); border-color: #cbd5e1; }
+    .btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .summary-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 20px; margin-top: 34px; }
+    .card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: var(--shadow); padding: 24px; }
+    .card h2, .card h3 { margin-top: 0; letter-spacing: -.03em; }
+    .card h2 { font-size: 24px; margin-bottom: 12px; }
+    .card p { color: var(--muted); margin: 0; }
+    .facts { display: grid; gap: 12px; }
+    .fact { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+    .fact:last-child { border-bottom: 0; padding-bottom: 0; }
+    .fact span:first-child { color: var(--faint); font-size: 14px; }
+    .fact span:last-child { font-weight: 700; text-align: right; }
+    section { padding: 56px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 22px; }
+    .section-head h2 { margin: 0; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -.055em; }
+    .section-head p { max-width: 560px; margin: 0; color: var(--muted); }
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { display: inline-flex; align-items: center; padding: 8px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--soft); color: #273244; font-size: 14px; font-weight: 650; }
+    .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .mini h3 { margin-bottom: 8px; font-size: 19px; }
+    .mini p { font-size: 15px; }
+    .timeline { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; }
+    .item { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 24px; border-bottom: 1px solid var(--line); }
+    .item:last-child { border-bottom: 0; }
+    .time { color: var(--blue); font-weight: 800; font-size: 14px; }
+    .item h3 { margin: 0 0 6px; font-size: 20px; letter-spacing: -.025em; }
+    .item p { margin: 0; color: var(--muted); }
+    .item ul { margin: 10px 0 0; padding-left: 20px; color: var(--muted); }
+    .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .project { display: block; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 22px; box-shadow: var(--shadow); transition: transform .16s ease, border-color .16s ease; }
+    .project:hover { transform: translateY(-2px); border-color: #bfdbfe; }
+    .tag { display: inline-flex; padding: 6px 9px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-size: 12px; font-weight: 800; }
+    .tag.green { background: var(--green-soft); color: var(--green); }
+    .tag.amber { background: var(--amber-soft); color: var(--amber); }
+    .project h3 { margin: 14px 0 8px; font-size: 22px; letter-spacing: -.035em; }
+    .project p { margin: 0 0 14px; color: var(--muted); }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .meta span { font-size: 13px; color: var(--faint); background: var(--soft); border: 1px solid var(--line); padding: 5px 8px; border-radius: 999px; }
+    .contact { text-align: center; border: 1px solid var(--line); border-radius: 24px; background: var(--soft); padding: 44px 24px; }
+    .contact h2 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 42px); letter-spacing: -.05em; }
+    .contact p { max-width: 660px; margin: 0 auto; color: var(--muted); }
+    footer { border-top: 1px solid var(--line); padding: 24px 0 38px; color: var(--faint); font-size: 13px; }
+    footer .container { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    @media (max-width: 860px) {
+      nav { display: none; }
+      .hero { padding-top: 52px; }
+      .summary-grid, .cards-3, .projects { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 10px; }
+      .item { grid-template-columns: 1fr; gap: 8px; }
+    }
+    @media (max-width: 520px) {
+      .container { width: min(100% - 28px, 1080px); }
+      h1 { font-size: 36px; }
+      .lead { font-size: 17px; }
+      .card, .project, .item { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="回到首頁"><span class="mark">鄭</span><span>鄭樺駿 Gary Chen</span></a>
+      <nav aria-label="主要導覽">
+        <a href="#about">關於</a>
+        <a href="#skills">技能</a>
+        <a href="#experience">經歷</a>
+        <a href="#projects">專案</a>
+        <a href="#contact">聯絡</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Software Engineer · AI Research Background</div>
+        <h1>軟體工程師，具備 AI 與演算法研究背景。</h1>
+        <p class="lead">資訊管理碩士，主軸是軟體工程與系統整合；具備 Python、FastAPI、Vue.js、TypeScript、Java、資料庫、深度學習與智慧物流演算法研究經驗。</p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:arlongchen082557@gmail.com">聯絡我</a>
+          <a class="btn" href="https://github.com/arlong0828" target="_blank" rel="noreferrer">查看 GitHub</a>
+          <a class="btn" href="https://pda.104.com.tw/profile/share/8ur4fz8zV8EO8x3njLsgp5KTkexkgIOT" target="_blank" rel="noreferrer">查看 104 履歷</a>
+        </div>
+
+        <div class="summary-grid" id="about">
+          <article class="card">
+            <h2>個人簡介</h2>
+            <p>我是鄭樺駿（Gary Chen），來自高雄。自學程式開發超過四年，曾完成無人化商店、影像辨識、人臉驗證與智慧物流路徑最佳化研究。我的優勢是能把需求拆解成系統架構，並用前端、後端、資料庫與 AI 模型整合出可驗證的成果。</p>
+          </article>
+          <aside class="card facts" aria-label="履歷摘要">
+            <div class="fact"><span>目標職位</span><span>軟體 / 後端 / 前端 / AI 工程師</span></div>
+            <div class="fact"><span>最高學歷</span><span>國立高雄科技大學 資管碩士</span></div>
+            <div class="fact"><span>程式經驗</span><span>4+ 年</span></div>
+            <div class="fact"><span>證照 / 獎項</span><span>OCA Java SE 8、崇越論文大賞特優</span></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="section-head">
+        <h2>核心能力</h2>
+        <p>以軟體工程為主軸，AI 與演算法研究作為加分能力，適合參與系統開發、資料處理、AI 應用與流程自動化。</p>
+      </div>
+      <div class="cards-3">
+        <article class="card mini"><h3>全端系統開發</h3><p>熟悉前端 Vue.js / TypeScript 與後端 FastAPI、Django、Laravel，能處理 API、資料庫與系統整合。</p></article>
+        <article class="card mini"><h3>AI / 影像辨識</h3><p>具備 TensorFlow、Keras、OpenCV 與 CNN 模型訓練經驗，曾完成商品辨識與人臉驗證流程。</p></article>
+        <article class="card mini"><h3>演算法最佳化</h3><p>碩士研究聚焦車輛路徑問題，提出 Hybrid NSGA-II 並結合 3D K-Means、Clarke-Wright 與 Local Search。</p></article>
+      </div>
+    </section>
+
+    <section class="container" id="skills">
+      <div class="section-head">
+        <h2>技術技能</h2>
+        <p>依照履歷與專案整理，讓 HR 或主管可以快速掃描你的技術範圍。</p>
+      </div>
+      <div class="skills">
+        <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Django</span><span class="chip">PHP / Laravel</span><span class="chip">Java</span><span class="chip">OCA Java SE 8</span><span class="chip">JavaScript</span><span class="chip">TypeScript</span><span class="chip">Vue.js</span><span class="chip">HTML / CSS</span><span class="chip">jQuery</span><span class="chip">MySQL</span><span class="chip">MS SQL</span><span class="chip">SQLite</span><span class="chip">Git</span><span class="chip">TensorFlow</span><span class="chip">Keras</span><span class="chip">OpenCV</span><span class="chip">Azure Face API</span><span class="chip">NSGA-II</span><span class="chip">K-Means</span>
+      </div>
+    </section>
+
+    <section class="container" id="experience">
+      <div class="section-head">
+        <h2>工作經驗</h2>
+        <p>軟體工程經驗為主，其他服務業經驗濃縮呈現為溝通與現場問題處理能力。</p>
+      </div>
+      <div class="timeline">
+        <article class="item">
+          <div class="time">2025/10 — Now</div>
+          <div>
+            <h3>軟體工程師｜系統整合服務公司</h3>
+            <p>參與系統開發與維護，使用 Python / FastAPI、Vue.js、TypeScript、PHP / Laravel 等技術。</p>
+            <ul>
+              <li>負責軟體程式設計、功能實作與系統開發。</li>
+              <li>參與前後端協作，將需求轉換為可運行功能。</li>
+              <li>工作內容涵蓋 Python、Vue.js、TypeScript、JavaScript 與系統架構規劃。</li>
+            </ul>
+          </div>
+        </article>
+        <article class="item">
+          <div class="time">2021 — 2022</div>
+          <div>
+            <h3>其他工作經驗｜門市服務與顧客接待</h3>
+            <p>曾於全家便利商店與統一超商擔任門市店員，累積顧客服務、現場問題處理、抗壓與團隊協作經驗。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" id="projects">
+      <div class="section-head">
+        <h2>專案與研究成果</h2>
+        <p>把 104 履歷中的專題、碩士論文與公開 GitHub 專案整理成容易閱讀的展示區。</p>
+      </div>
+      <div class="projects">
+        <a class="project" href="https://github.com/arlong0828/Store.git" target="_blank" rel="noreferrer">
+          <span class="tag green">AI / Computer Vision</span>
+          <h3>無人化商店實作</h3>
+          <p>基於 Azure 與 tf.keras 的智慧商店系統，整合商品辨識、人臉驗證與支付流程。我負責模型訓練、後端服務與資料庫流程，商品辨識準確率達 95% 以上。</p>
+          <div class="meta"><span>Django</span><span>SQLite</span><span>Keras CNN</span><span>OpenCV</span><span>Azure Face API</span></div>
+        </a>
+        <a class="project" href="https://github.com/arlong0828/My-paper-.git" target="_blank" rel="noreferrer">
+          <span class="tag amber">Research / Optimization</span>
+          <h3>碩士論文：智慧物流路徑最佳化</h3>
+          <p>針對二層級、多倉庫、多日、多時期且具同時取送需求的車輛路徑問題，提出 Hybrid NSGA-II，結合 3D K-Means、Clarke-Wright 與 Local Search；論文投稿至 Applied Soft Computing，並獲 2025 崇越論文大賞特優。</p>
+          <div class="meta"><span>HNSGA-II</span><span>3D K-Means</span><span>VRP</span><span>Multi-objective</span></div>
+        </a>
+        <a class="project" href="https://github.com/arlong0828/Stock-Line-bot" target="_blank" rel="noreferrer">
+          <span class="tag">Automation</span>
+          <h3>Stock-Line-bot</h3>
+          <p>股票資訊與提醒相關的 LINE Bot 專案，作為投資資訊自動化、互動式查詢與即時通知的基礎。</p>
+          <div class="meta"><span>LINE Bot</span><span>Stock Data</span><span>Automation</span></div>
+        </a>
+        <a class="project" href="https://github.com/arlong0828/LLM-SOP" target="_blank" rel="noreferrer">
+          <span class="tag">Knowledge System</span>
+          <h3>LLM-SOP</h3>
+          <p>整理 LLM 使用、SOP 與知識工作方法，讓 AI 協作流程更標準化、更容易複製與落地。</p>
+          <div class="meta"><span>LLM</span><span>SOP</span><span>Docs</span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="section-head">
+        <h2>學歷、證照與語言</h2>
+        <p>資訊管理背景，具備程式、資料、AI 與管理問題建模的跨域基礎。</p>
+      </div>
+      <div class="timeline">
+        <article class="item"><div class="time">2023/09 — 2025/08</div><div><h3>國立高雄科技大學｜資訊管理學系 碩士</h3><p>研究智慧物流、車輛路徑問題、多目標最佳化、啟發式演算法與資料分析。</p></div></article>
+        <article class="item"><div class="time">2019/09 — 2023/06</div><div><h3>國立澎湖科技大學｜資訊管理系 學士</h3><p>大學期間自學 Python 與 JavaScript，完成無人化商店專題，涵蓋前端、後端、資料庫、AI 模型與雲端 API 整合。</p></div></article>
+        <article class="item"><div class="time">證照 / 獎項</div><div><h3>OCA Java SE 8、2025 第十八屆崇越論文大賞特優</h3><p>英文聽說讀寫中等；中文精通；日文略懂。</p></div></article>
+      </div>
+    </section>
+
+    <section class="container" id="contact">
+      <div class="contact">
+        <h2>歡迎聯繫我</h2>
+        <p>正在尋找前端、後端、全端、AI 工程或演算法相關機會。若你需要能結合系統開發、AI 應用與研究落地的人才，歡迎與我聯絡。</p>
+        <div class="actions" style="justify-content:center">
+          <a class="btn primary" href="mailto:arlongchen082557@gmail.com">寄信聯絡</a>
+          <a class="btn" href="https://github.com/arlong0828" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" href="https://pda.104.com.tw/profile/share/8ur4fz8zV8EO8x3njLsgp5KTkexkgIOT" target="_blank" rel="noreferrer">104 履歷</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© <span id="year"></span> 鄭樺駿 Gary Chen</span>
+      <span>Software Engineering · AI · Full-stack Development</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
