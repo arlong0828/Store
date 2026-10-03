@@ -1,0 +1,29 @@
+from django.contrib import admin
+from store_app.models import member,commodity,faceID
+
+# Register your models here.
+# admin.site.register(member)
+
+class Admin_member_show_field(admin.ModelAdmin):
+    list_display = ('id', 'cName', 'cSex', 'cEmail')
+    search_fields = ('cName',)
+    ordering = ('id',)
+
+admin.site.register(member,Admin_member_show_field)
+
+class Admin_commodity_show_field(admin.ModelAdmin):
+    list_display = ('id','commodity_Name','commodity_price','commodity_image')
+    search_fields = ('commodity_Name',)
+    ordering = ('id',)
+
+admin.site.register(commodity,Admin_commodity_show_field)
+
+class Admin_faceID_show_field(admin.ModelAdmin):
+    list_display = ('id','faceID_name','has_local_embeddings')
+    search_fields = ('faceID_name',)
+    ordering = ('id',)
+
+    @admin.display(boolean=True, description='本機特徵')
+    def has_local_embeddings(self, obj):
+        return bool(obj.faceID_embeddings)
+admin.site.register(faceID,Admin_faceID_show_field)

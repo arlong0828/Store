@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+{% block title %}購物車｜Stride AI{% endblock %}
+{% block body_class %}app-page{% endblock %}
+{% block content %}
+<section class="workspace-section">
+  <div class="shell content-shell">
+    <div class="workspace-heading"><div><p class="eyebrow"><span></span> YOUR SELECTION</p><h1>確認購物清單</h1><p>確認辨識商品與金額都正確，再前往結帳。</p></div><div class="progress-steps"><span><i>✓</i>辨識商品</span><b class="done"></b><span class="active"><i>2</i>確認清單</span><b></b><span><i>3</i>完成結帳</span></div></div>
+    <div class="cart-layout">
+      <div class="cart-list-card">
+        <div class="panel-title"><div>已辨識商品</div><span>{{ cart_items|length }} 件</span></div>
+        {% for item in cart_items %}
+        <article class="cart-row"><span class="cart-row-number">0{{ forloop.counter }}</span><div class="cart-row-info"><small>AI RECOGNIZED</small><h2>{{ item.name }}</h2></div><strong>NT$ {{ item.price }}</strong></article>
+        {% empty %}<div class="empty-state padded"><span class="empty-icon">⌑</span><h3>購物車還是空的</h3><p>先到辨識頁加入一件喜歡的商品吧。</p><a class="button button-primary" href="{% url 'shopping' %}">開始辨識</a></div>{% endfor %}
+      </div>
+      <aside class="summary-card"><p class="eyebrow"><span></span> ORDER SUMMARY</p><h2>訂單摘要</h2><dl><div><dt>商品數量</dt><dd>{{ cart_items|length }} 件</dd></div><div><dt>服務費</dt><dd>NT$ 0</dd></div><div class="summary-total"><dt>總計</dt><dd><small>NTD</small> NT$ {{ total }}</dd></div></dl><a class="button button-primary button-full {% if not cart_items %}button-disabled{% endif %}" href="{% url 'checkout' %}">前往安全結帳 <span>→</span></a><a class="continue-link" href="{% url 'shopping' %}">＋ 繼續辨識商品</a></aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

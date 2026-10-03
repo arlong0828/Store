@@ -1,0 +1,29 @@
+{% extends "layouts/base.html" %}
+{% block title %}歡迎回來，{{ t }}｜Stride AI{% endblock %}
+{% block content %}
+<section class="member-hero">
+  <div class="shell member-hero-grid">
+    <div class="reveal">
+      <p class="eyebrow"><span></span> MEMBER ACCESS GRANTED</p>
+      <h1>{{ t }}，歡迎回來。</h1>
+      <p>鏡頭與商品辨識系統已就緒，現在可以開始你的無接觸購物流程。</p>
+      <a class="button button-primary" href="{% url 'shopping' %}">開始辨識商品 <span>→</span></a>
+    </div>
+    <div class="system-panel reveal reveal-delay">
+      <div class="system-panel-head"><span>SYSTEM STATUS</span><span class="online"><i></i> ALL ONLINE</span></div>
+      <div class="system-stat"><span>FACE ID</span><strong>身分驗證完成</strong><i>✓</i></div>
+      <div class="system-stat"><span>VISION AI</span><strong>商品模型已載入</strong><i>✓</i></div>
+      <div class="system-stat"><span>CHECKOUT</span><strong>結帳服務可使用</strong><i>✓</i></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-block compact" id="products">
+  <div class="shell">
+    <div class="section-heading"><div><p class="eyebrow"><span></span> AVAILABLE NOW</p><h2>今天想穿哪一雙？</h2></div><a class="link-arrow" href="{% url 'shopping' %}">前往辨識 <span>→</span></a></div>
+    <div class="product-grid">
+      {% for commodity in commoditylist %}{% include "components/product_card.html" %}{% empty %}<div class="empty-state wide"><h3>尚無商品</h3><p>商品上架後會顯示在這裡。</p></div>{% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

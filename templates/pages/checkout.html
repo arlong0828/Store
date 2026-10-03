@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+{% block title %}安全結帳｜Stride AI{% endblock %}
+{% block body_class %}app-page{% endblock %}
+{% block content %}
+<section class="workspace-section">
+  <div class="shell content-shell">
+    <div class="workspace-heading"><div><p class="eyebrow"><span></span> SECURE CHECKOUT</p><h1>最後一步，確認付款</h1><p>透過已驗證的會員身分安全完成本次交易。</p></div><div class="progress-steps"><span><i>✓</i>辨識商品</span><b class="done"></b><span><i>✓</i>確認清單</span><b class="done"></b><span class="active"><i>3</i>完成結帳</span></div></div>
+    <form class="checkout-grid" action="{% url 'checkout' %}" method="post">
+      {% csrf_token %}
+      <div class="checkout-method">
+        <div class="panel-title"><div>付款驗證</div><span class="secure-chip">安全連線</span></div>
+        <div class="identity-card"><span class="identity-mark">{{ t|first }}</span><div><small>付款會員</small><strong>{{ t }}</strong><p><span class="status-dot"></span> 身分已通過臉部驗證</p></div></div>
+        <div class="notice-box"><span>⌾</span><p><strong>示範結帳流程</strong><br>目前介面會送出結帳請求；正式環境請串接實際金流服務。</p></div>
+      </div>
+      <aside class="summary-card"><p class="eyebrow"><span></span> FINAL TOTAL</p><h2>本次訂單</h2><div class="checkout-items">{% for item in cart_items %}<div><span>{{ item.name }}</span><strong>NT$ {{ item.price }}</strong></div>{% empty %}<p>目前沒有商品。</p>{% endfor %}</div><dl><div class="summary-total"><dt>應付總額</dt><dd><small>NTD</small> NT$ {{ total }}</dd></div></dl><button class="button button-primary button-full" type="submit" {% if not cart_items %}disabled{% endif %}>確認付款 <span>→</span></button><a class="continue-link" href="{% url 'shopping-cart' %}">← 返回購物車</a></aside>
+    </form>
+  </div>
+</section>
+{% endblock %}
